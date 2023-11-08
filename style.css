@@ -1,9 +1,9 @@
 body{
     margin: 0;
-    background: blue;
+    background: green;
     overflow: hidden;
     text-align: center;
 }
 #myCanvas{
-    background: lightblue;
+    background: rgb(20, 101, 223);
 }

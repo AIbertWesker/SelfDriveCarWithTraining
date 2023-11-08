@@ -17,13 +17,14 @@ class Controls{
                 case "a":
                     this.left=true;
                     break;
-                case "s":
+                case "d":
                     this.right=true;
                     break;
-                case "d":
-                    this.back=true;
+                case "s":
+                    this.reverse=true;
                     break;
             }
+            console.table(this);
         }
 
         document.onkeyup=(event)=>{
@@ -34,11 +35,11 @@ class Controls{
                 case "a":
                     this.left=false;
                     break;
-                case "s":
+                case "d":
                     this.right=false;
                     break;
-                case "d":
-                    this.back=false;
+                case "s":
+                    this.reverse=false;
                     break;
             }
         }
