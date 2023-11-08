@@ -1,8 +1,8 @@
 const canvas=document.getElementById("myCanvas");
-canvas.width=200;
+canvas.width=600;
 
 const ctx = canvas.getContext("2d");
-const ship=new Ship(100,100,30,50);
+const ship=new Ship(300,300,30,50);
 
 
 animate();
