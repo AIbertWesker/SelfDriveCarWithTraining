@@ -19,7 +19,7 @@ class Ship{
             this.speed+=this.acceleration;
         }
 
-        if(this.controls.reverse) {
+        if(this.controls.back) {
             this.speed-=this.acceleration;
         }
 

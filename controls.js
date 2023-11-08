@@ -21,7 +21,7 @@ class Controls{
                     this.right=true;
                     break;
                 case "s":
-                    this.reverse=true;
+                    this.back=true;
                     break;
             }
             console.table(this);
@@ -39,7 +39,7 @@ class Controls{
                     this.right=false;
                     break;
                 case "s":
-                    this.reverse=false;
+                    this.back=false;
                     break;
             }
         }
