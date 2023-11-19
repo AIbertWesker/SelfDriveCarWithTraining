@@ -11,11 +11,14 @@ class Ship{
         this.friction = 0.05;
         this.angle = 0;
 
+        this.sensor = new Sensor(this);
         this.controls=new Controls();
     }
 
-    update() {
-      this.#move();
+    update(roadBorders) {
+        this.#move();
+        this.sensor.update(roadBorders);
+
     }
 
     #move() {
@@ -77,5 +80,7 @@ class Ship{
         );
         ctx.fill();
         ctx.restore();
+
+        this.sensor.draw(ctx);
     }
 }
