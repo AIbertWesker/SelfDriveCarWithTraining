@@ -3,24 +3,29 @@ canvas.width=600;
 
 const ctx = canvas.getContext("2d");
 const road = new Road(canvas.width/2, canvas.width*0.9);
-const ship=new Ship(road.getLaneCenter(2),100,30,50);
+const ship=new Ship(road.getLaneCenter(2),100,30,50, "KEYS");
+const traffic = [
+    new Ship(road.getLaneCenter(2),-100,30,50, "DUMMY", 2)
+];
 
 
-
-//// Utwórz nowy obiekt Image dla obrazu statku
+//// Utwï¿½rz nowy obiekt Image dla obrazu statku
 //const shipImage = new Image();
-//shipImage.src = 'nazwa_obrazu.jpg'; // Zmieñ 'nazwa_obrazu.jpg' na œcie¿kê do pliku obrazu
+//shipImage.src = 'nazwa_obrazu.jpg'; // Zmieï¿½ 'nazwa_obrazu.jpg' na ï¿½cieï¿½kï¿½ do pliku obrazu
 
 //const ship = new Ship(road.getLaneCenter(2), 100, 30, 50, shipImage); // Dodaj obraz statku do konstruktora Ship
 
-//// Event handler dla za³adowania obrazu
+//// Event handler dla zaï¿½adowania obrazu
 //shipImage.onload = function () {
-//    animate(); // Rozpocznij animacjê po za³adowaniu obrazu
+//    animate(); // Rozpocznij animacjï¿½ po zaï¿½adowaniu obrazu
 //};
 
 animate();
 
 function animate() {
+    for(let i=0;i<traffic.length;i++) {
+        traffic[i].update(road.borders);
+    }
     ship.update(road.borders);
     
     canvas.height=window.innerHeight;
@@ -28,6 +33,9 @@ function animate() {
     ctx.save();
     ctx.translate(0, -ship.y+canvas.height*0.75);
     road.draw(ctx);
+    for(let i=0;i<traffic.length;i++) {
+        traffic[i].draw(ctx);
+    }
     ship.draw(ctx);
 
     ctx.restore();
