@@ -8,25 +8,13 @@ const traffic = [
     new Ship(road.getLaneCenter(2),-100,30,50, "DUMMY", 2)
 ];
 
-
-//// Utw�rz nowy obiekt Image dla obrazu statku
-//const shipImage = new Image();
-//shipImage.src = 'nazwa_obrazu.jpg'; // Zmie� 'nazwa_obrazu.jpg' na �cie�k� do pliku obrazu
-
-//const ship = new Ship(road.getLaneCenter(2), 100, 30, 50, shipImage); // Dodaj obraz statku do konstruktora Ship
-
-//// Event handler dla za�adowania obrazu
-//shipImage.onload = function () {
-//    animate(); // Rozpocznij animacj� po za�adowaniu obrazu
-//};
-
 animate();
 
 function animate() {
     for(let i=0;i<traffic.length;i++) {
-        traffic[i].update(road.borders);
+        traffic[i].update(road.borders, []);
     }
-    ship.update(road.borders);
+    ship.update(road.borders, traffic);
     
     canvas.height=window.innerHeight;
 
@@ -34,9 +22,9 @@ function animate() {
     ctx.translate(0, -ship.y+canvas.height*0.75);
     road.draw(ctx);
     for(let i=0;i<traffic.length;i++) {
-        traffic[i].draw(ctx);
+        traffic[i].draw(ctx, "red");
     }
-    ship.draw(ctx);
+    ship.draw(ctx, "#7C4700");
 
     ctx.restore();
     requestAnimationFrame(animate);
