@@ -32,17 +32,17 @@ class Road {
     ctx.lineWidth = 1;
     ctx.strokeStyle = 'blue';
 
-    for (let i = 1; i <= this.laneCount - 1; i++) {
+    for (let i = 1; i <= this.laneCount - 1; i++) { 
       const x = lerp(this.left, this.right, i / this.laneCount);
 
-      ctx.setLineDash([20, 20]);
+      ctx.setLineDash([20, 20]);                  //linie przerywane
       ctx.beginPath();
       ctx.moveTo(x, this.top);
       ctx.lineTo(x, this.bottom);
       ctx.stroke();
     }
 
-    ctx.setLineDash([]);
+    ctx.setLineDash([]);                          //linie ciągłe
     this.borders.forEach((border) => {
       ctx.beginPath();
       ctx.moveTo(border[0].x, border[0].y);

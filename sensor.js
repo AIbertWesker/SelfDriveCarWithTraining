@@ -19,7 +19,7 @@ class Sensor {
         }
     }
 
-    #getReading(ray, roadBorders, traffic) {
+    #getReading(ray, roadBorders, traffic) {            //odczyt z sensora (czy dotyka czy nie)
         let touches = [];
 
         for (let i = 0; i < roadBorders.length; i++) {
@@ -53,7 +53,7 @@ class Sensor {
             return null;
         }
         else{
-            const offsets = touches.map(e => e.offset);
+            const offsets = touches.map(e => e.offset);         //offset ("jak bardzo" dotyka)
             const minOffset = Math.min(...offsets);
             return touches.find(e => e.offset == minOffset);
         }
@@ -62,14 +62,14 @@ class Sensor {
     #castRays() {
         this.rays = [];
 
-        for (let i = 0; i < this.rayCount; i++) {
+        for (let i = 0; i < this.rayCount; i++) {               //rozproszenie sensorów
             const rayAngle = lerp(
                 this.raySpread / 2,
                 -this.raySpread / 2,
                 this.rayCount == 1 ? 0.5 : i / (this.rayCount - 1)
             ) + this.ship.angle;
 
-            const start = { x: this.ship.x, y: this.ship.y };
+            const start = { x: this.ship.x, y: this.ship.y };   //długość sennsora
             const end = {
                 x: this.ship.x -
                     Math.sin(rayAngle) * this.rayLenght,
@@ -80,7 +80,7 @@ class Sensor {
         }
     }
 
-    draw(ctx) {
+    draw(ctx) {                                         //rysowanie na canvas
         for (let i = 0; i < this.rayCount; i++) {
             let end = this.rays[i][1];
             if (this.readings[i]) {
