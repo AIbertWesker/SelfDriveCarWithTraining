@@ -17,7 +17,7 @@ class Ship{
         if(controlType !="DUMMY") {
             this.sensor = new Sensor(this);
             this.brain = new NeuralNetwork(
-                [this.sensor.rayCount, 6, 4]
+                [this.sensor.rayCount, 2, 1]
             );
         }
         
@@ -38,10 +38,21 @@ class Ship{
             const outputs = NeuralNetwork.feedForward(offsets, this.brain);
             console.log(outputs);
 
-            this.controls.forward = outputs[0];
-            this.controls.left = outputs[1];
-            this.controls.right = outputs[2];
-            this.controls.back = outputs[3];
+            this.controls.forward = true;
+            this.controls.back = false;
+
+            if(outputs[0]>0.1) {
+                this.controls.left = true;
+                this.controls.right = false;
+            }
+            else if(outputs[0]<-0.1) {
+                this.controls.left = false;
+                this.controls.right = true;
+            }
+            else {
+                this.controls.left = false;
+                this.controls.right = false;
+            }
 
         }
         

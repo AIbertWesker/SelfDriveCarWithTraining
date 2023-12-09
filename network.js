@@ -17,7 +17,56 @@ class NeuralNetwork {
         }
         return outputs;
     }
+
+    static backpropagation(givenInputs, expectedOutputs, network, learningRate) {
+        // Perform feed forward to get the outputs
+        let outputs = NeuralNetwork.feedForward(givenInputs, network);
+
+        // Calculate the output layer error
+        let outputLayer = network.levels[network.levels.length - 1];
+        let outputErrors = new Array(outputLayer.outputs.length);
+        for (let i = 0; i < outputLayer.outputs.length; i++) {
+            outputErrors[i] = expectedOutputs[i] - outputs[i];
+        }
+
+        // Update the output layer weights and biases
+        for (let i = 0; i < outputLayer.inputs.length; i++) {
+            for (let j = 0; j < outputLayer.outputs.length; j++) {
+                outputLayer.weights[i][j] += learningRate * outputErrors[j] * outputLayer.inputs[i];
+            }
+        }
+        for (let i = 0; i < outputLayer.biases.length; i++) {
+            outputLayer.biases[i] += learningRate * outputErrors[i];
+        }
+
+        // Calculate the hidden layer errors and update weights and biases
+        for (let l = network.levels.length - 2; l >= 0; l--) {
+            let currentLayer = network.levels[l];
+            let nextLayer = network.levels[l + 1];
+
+            let errors = new Array(currentLayer.outputs.length);
+            for (let i = 0; i < currentLayer.outputs.length; i++) {
+                let error = 0;
+                for (let j = 0; j < nextLayer.outputs.length; j++) {
+                    error += nextLayer.weights[i][j] * outputErrors[j];
+                }
+                errors[i] = error;
+            }
+
+            for (let i = 0; i < currentLayer.inputs.length; i++) {
+                for (let j = 0; j < currentLayer.outputs.length; j++) {
+                    currentLayer.weights[i][j] += learningRate * errors[j] * currentLayer.inputs[i];
+                }
+            }
+            for (let i = 0; i < currentLayer.biases.length; i++) {
+                currentLayer.biases[i] += learningRate * errors[i];
+            }
+
+            outputErrors = errors;
+        }
+    }
 }
+
 class Level {
     constructor(inputCount, outputCount) {
         this.inputs = new Array(inputCount);
@@ -55,11 +104,9 @@ class Level {
                 sum += level.inputs[j] * level.weights[j][i];
             }
 
-            if (sum > level.biases[i]) {
-                level.outputs[i] = 1;
-            } else {
-                level.outputs[i] = 0;
-            }
+            // Apply bipolar activation
+            level.outputs[i] = Math.tanh(sum);
+
         }
         return level.outputs;
     }
