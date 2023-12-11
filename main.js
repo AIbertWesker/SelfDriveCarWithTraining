@@ -8,7 +8,7 @@ const road = new Road(canvas.width/2, canvas.width*0.5);
 let bestOne;
 
 function test() {
-const N = 100;
+    
 const N = 300;
 const ships = generateShips(N);
 bestOne = ships[0];

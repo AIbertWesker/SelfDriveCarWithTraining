@@ -37,7 +37,8 @@ class NeuralNetwork {
                     )
                 }
             }
-        })
+        });
+    }
 
     static backpropagation(givenInputs, expectedOutputs, network, learningRate) {
         // Perform feed forward to get the outputs
