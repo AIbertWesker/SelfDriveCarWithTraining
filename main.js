@@ -5,9 +5,13 @@ const ctx = canvas.getContext("2d");
 const road = new Road(canvas.width/2, canvas.width*0.5);
 
 //const ship = new Ship(road.getLaneCenter(2), 100, 30, 50, "AI");
+
+let bestOne;
+
+function test() {
 const N = 100;
 const ships = generateShips(N);
-let bestOne = ships[0];
+bestOne = ships[0];
 if (localStorage.getItem("bestBrain")) {                    //pobranie najlepszego z pamięci
     for(let i=0; i < ships.length; i++) {
         ships[i].brain = JSON.parse(
@@ -35,14 +39,6 @@ const traffic = [                                           //generowanie traffi
 
 animate();
 
-function save() {                                           //zapis najlepszego
-    localStorage.setItem("bestBrain",
-        JSON.stringify(bestOne.brain));
-}
-
-function discard() {                                        //usunięcie najlepszego
-    localStorage.removeItem("bestBrain");
-}
 
 function generateShips(N) {                                 //generowanie N statków uczących się
     const ships = [];
@@ -84,4 +80,14 @@ function animate() {
     //ship.draw(ctx, "#7C4700");
     ctx.restore();
     requestAnimationFrame(animate);
+}
+}
+
+function save() {                                           //zapis najlepszego
+    localStorage.setItem("bestBrain",
+        JSON.stringify(bestOne.brain));
+}
+
+function discard() {                                        //usunięcie najlepszego
+    localStorage.removeItem("bestBrain");
 }
