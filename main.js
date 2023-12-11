@@ -5,11 +5,11 @@ const ctx = canvas.getContext("2d");
 const road = new Road(canvas.width/2, canvas.width*0.5);
 
 //const ship = new Ship(road.getLaneCenter(2), 100, 30, 50, "AI");
-
 let bestOne;
 
 function test() {
 const N = 100;
+const N = 300;
 const ships = generateShips(N);
 bestOne = ships[0];
 if (localStorage.getItem("bestBrain")) {                    //pobranie najlepszego z pamięci
