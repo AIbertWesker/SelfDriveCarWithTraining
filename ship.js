@@ -35,8 +35,8 @@ class Ship{
             const offsets = this.sensor.readings.map(
                 s => s == null ? 0 : 1 - s.offset
             );
-            const outputs = NeuralNetwork.feedForward(offsets, this.brain);
-            console.log(outputs);
+            const outputs = NeuralNetwork.feedForward(offsets, this.brain); //ruch o wyniki z propagacji w przód
+            //console.log(outputs);
 
             this.controls.forward = true;
             this.controls.back = false;
@@ -58,7 +58,7 @@ class Ship{
         
     }
 
-    #assessDamage(roadBorders, traffic) {
+    #assessDamage(roadBorders, traffic) {                          //sprawdzanie, czy uderzył w traffica lub ścianę
         for(let i=0;i<roadBorders.length;i++) {
             if(polysIntersect(this.polygon,roadBorders[i]))
                 return true;
@@ -70,7 +70,7 @@ class Ship{
         }
     }
 
-    #createPolygon() {
+    #createPolygon() {                                              //rysowanie prostokątu
         const points=[];
         const radius=Math.hypot(this.width,this.height)/2;
         const alpha=Math.atan2(this.width,this.height);
@@ -93,7 +93,7 @@ class Ship{
         return points;
     }
 
-    #move() {
+    #move() {                                                       //ruch
         if(this.controls.forward) {
             this.speed+=this.acceleration;
         }
@@ -139,7 +139,7 @@ class Ship{
         this.y-=Math.cos(this.angle)*this.speed;
     }
 
-    draw(ctx, color,drawSensor=false){
+    draw(ctx, color,drawSensor=false){                              //rysowanie na canvas
         if(this.damaged) {
             ctx.fillStyle="gray";
         } else {
