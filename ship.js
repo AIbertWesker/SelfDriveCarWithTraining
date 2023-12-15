@@ -20,7 +20,6 @@ class Ship{
                 [this.sensor.rayCount, 2, 1]
             );
         }
-        
         this.controls=new Controls(controlType);
     }
 
@@ -42,12 +41,12 @@ class Ship{
             this.controls.back = false;
 
             if(outputs[0]>0.1) {
-                this.controls.left = true;
-                this.controls.right = false;
-            }
-            else if(outputs[0]<-0.1) {
                 this.controls.left = false;
                 this.controls.right = true;
+            }
+            else if(outputs[0]<-0.1) {
+                this.controls.left = true;
+                this.controls.right = false;
             }
             else {
                 this.controls.left = false;
