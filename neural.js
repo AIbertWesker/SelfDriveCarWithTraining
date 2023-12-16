@@ -3,6 +3,7 @@ class Neural {
         this.inputSize = inputSize;
         this.hiddenSize = hiddenSize;
         this.outputSize = outputSize;
+        this.hiddenLayer = [];
         
         // Initialize weights and biases
         this.weightsInputHidden = this.initializeWeights(inputSize, hiddenSize);
@@ -33,14 +34,13 @@ class Neural {
 
     feedForward(input) {
         // Calculate hidden layer values
-        const hiddenLayer = [];
         for (let i = 0; i < this.hiddenSize; i++) {
             let sum = 0;
             for (let j = 0; j < this.inputSize; j++) {
                 sum += input[j] * this.weightsInputHidden[j][i];
             }
             sum += this.biasHidden[i];
-            hiddenLayer[i] = this.bipolar(sum);
+            this.hiddenLayer[i] = this.bipolar(sum);
         }
 
         // Calculate output layer values
@@ -48,7 +48,7 @@ class Neural {
         for (let i = 0; i < this.outputSize; i++) {
             let sum = 0;
             for (let j = 0; j < this.hiddenSize; j++) {
-                sum += hiddenLayer[j] * this.weightsHiddenOutput[j][i];
+                sum += this.hiddenLayer[j] * this.weightsHiddenOutput[j][i];
             }
             sum += this.biasOutput[i];
             outputLayer[i] = this.bipolar(sum);
@@ -66,22 +66,46 @@ class Neural {
         return 0.5 * (1 + fx) * (1 - fx);
     }
 
-    train(input, target) {
-        const output = this.feedForward(input);
-        const outputError = this.calculateOutputError(output, target);
-        const hiddenError = this.calculateHiddenError(outputError);
+    train() {
+        const dataset = [
+            [0, 0, 0, 0, 0, 0],
+            [0.5, 0, 0, 0, 0.5, 0],
+            [0.7, 0, 0, 0, 0, 1],
+            [0, 0, 0.7, 0, 0, -1],
+            [0, 0.4, 0.5, 0, 0, 1],
+            [0, 0, 0, 0.5, 0, -1],
+            [0, 0, 0, 0.5, 0.4, -1],
+            [0.5, 0, 0.7, 0, 0, 1],
+            [0, 0, 0.7, 0, 0.5, -1],
+            [0, 0.4, 0, 0.4, 0, 0],
+            [0, 0.4, 0, 0.4, 0.4, 0],
+            [0, 0.5, 0, 0.2, 0.5, 0],
+            [0.5, 0.2, 0, 0.2, 0, 0],
+            [0, 0.1, 0.4, 0.1, 0.4, -1],
+            [0.4, 0.1, 0.4, 0.1, 0, 1]
+        ];
 
-        this.updateWeightsAndBiases(input, output, outputError, hiddenError);
+        const epoch = 1000000; //powtorzenia
+        for (let i = 0; i < epoch; i++) {
+            const losowanko = Math.floor(Math.random() * dataset.length);
+            const input = dataset[losowanko].slice(0, 5); //losowanie inputu z datasetu
+            const target = dataset[losowanko].slice(5, ); // ten target  z datasetu
+            const output = this.feedForward(input);
+            const outputError = this.calculateOutputError(output, target);
+            const hiddenError = this.calculateHiddenError(outputError);
+    
+            this.updateWeightsAndBiases(0.1, outputError, hiddenError, output, input);
+        }
     }
 
     calculateOutputError(output, target) {  //δ
         const outputError = [];
         for (let i = 0; i < this.outputSize; i++) {
-            outputError[i] = (target[5] - output[i])*this.bipolarSigmoidDerivative(output[i]); //te 5 w target to zmienic na cos ludzkiego
+            outputError[i] = (target[0] - output[i])*this.bipolarSigmoidDerivative(output[i]); 
         }
         return outputError;
     }
-    //tu skonczylem
+
     calculateHiddenError(outputError) {
         const hiddenError = [];
         for (let i = 0; i < this.hiddenSize; i++) {
@@ -89,33 +113,33 @@ class Neural {
             for (let j = 0; j < this.outputSize; j++) {
                 sum += outputError[j] * this.weightsHiddenOutput[i][j];
             }
-            hiddenError[i] = this.feedForwardSigmoidDerivative(i) * sum;
+            hiddenError[i] = this.bipolarSigmoidDerivative(this.hiddenLayer[i]) * sum;
         }
         return hiddenError;
     }
 
-    updateWeightsAndBiases(input, output, outputError, hiddenError) {
+    updateWeightsAndBiases(learningRate, outputError, hiddenError, output, input) {
         for (let i = 0; i < this.hiddenSize; i++) {
             for (let j = 0; j < this.outputSize; j++) {
-                this.weightsHiddenOutput[i][j] += outputError[j] * this.feedForwardSigmoid(i) * this.learningRate;
-            }
+                this.weightsHiddenOutput[i][j] += learningRate * outputError[j] * this.bipolarSigmoidDerivative(output[j]) * this.hiddenLayer[i];
+            } 
         }
 
         for (let i = 0; i < this.inputSize; i++) {
             for (let j = 0; j < this.hiddenSize; j++) {
-                this.weightsInputHidden[i][j] += hiddenError[j] * input[i] * this.learningRate;
+                this.weightsInputHidden[i][j] += learningRate * hiddenError[j] * this.bipolarSigmoidDerivative(this.hiddenLayer[j]) * input[i];
             }
         }
 
         for (let i = 0; i < this.outputSize; i++) {
-            this.biasOutput[i] += outputError[i] * this.learningRate;
+            this.biasOutput[i] += learningRate * outputError[i] * this.bipolarSigmoidDerivative(output[i]);
         }
 
         for (let i = 0; i < this.hiddenSize; i++) {
-            this.biasHidden[i] += hiddenError[i] * this.learningRate;
+            this.biasHidden[i] += learningRate * hiddenError[i] * this.bipolarSigmoidDerivative(this.hiddenLayer[i]);
         }
-    }
 
+    }
 }
 
 const neuralObject = new Neural(5, 2, 1); // Create random neural network for getter
@@ -124,12 +148,15 @@ function getNeuralObject() {
     return neuralObject;
 }
 
-const input = [0, 0, 0, 0, 0];
-output = neuralObject.feedForward(input);
-console.log(output);
-console.log(neuralObject.weightsInputHidden);
-console.log(neuralObject.weightsHiddenOutput);
+const input = [0.2, 0.4, 0.7, 0, 0];
 
+console.log("Wylosowanie wagi schowane: "+neuralObject.weightsInputHidden);
+console.log("Wylosowanie wagi wyjsciowe: "+neuralObject.weightsHiddenOutput);
+console.log("Wylosowanie bias schowane: "+neuralObject.biasHidden);
+console.log("Wylosowanie bias wyjsciowe: "+neuralObject.biasOutput);
+output = neuralObject.feedForward(input);
+console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
+console.log("Output: "+output);
 
 const dataset = [
     [0, 0, 0, 0, 0, 1],
@@ -137,18 +164,25 @@ const dataset = [
     [1, 1, 1, 0, 0, 1]
 ];
 
-console.log(neuralObject.calculateOutputError(output, dataset[0]));
-console.log(dataset[0])
+console.log("Error warstwy wyjsciowej: "+neuralObject.calculateOutputError(output, dataset[0]));
+chuj = neuralObject.calculateOutputError(output, dataset[0]);
+fiut = neuralObject.calculateHiddenError(chuj);
+console.log("Error warstwy ukrytej: "+fiut);
+neuralObject.updateWeightsAndBiases(0.1, chuj, fiut, output, input);
 
-// const learningRate = 0.1;
+console.log("Nowe wagi schowane: "+neuralObject.weightsInputHidden);
+console.log("Nowe wagi wyjsciowe: "+neuralObject.weightsHiddenOutput);
+console.log("Nowe bias schowane: "+neuralObject.biasHidden);
+console.log("Nowe bias wyjsciowe: "+neuralObject.biasOutput);
+output = neuralObject.feedForward(input);
+console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
+console.log("Output: "+output);
 
-// for (let i = 0; i < dataset.length; i++) {
-//     const data = dataset[i];
-//     neuralObject.train(data.input, data.output);
-// }
-
-// output = neuralObject.feedForward(input);
-// console.log(output);
-// trening do wyjebania
-// dataset moze byc ale troche do chuja
-// NaN value po treningu z chuja
+neuralObject.train();
+console.log("Nowe wagi schowane: "+neuralObject.weightsInputHidden);
+console.log("Nowe wagi wyjsciowe: "+neuralObject.weightsHiddenOutput);
+console.log("Nowe bias schowane: "+neuralObject.biasHidden);
+console.log("Nowe bias wyjsciowe: "+neuralObject.biasOutput);
+console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
+output = neuralObject.feedForward(input);
+console.log("Output: "+output);
