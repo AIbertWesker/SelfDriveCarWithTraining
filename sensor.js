@@ -2,8 +2,8 @@ class Sensor {
     constructor(ship) {
         this.ship = ship;
         this.rayCount = 5;
-        this.rayLenght = 200;
-        this.raySpread = Math.PI / 2;
+        this.rayLenght = 150;
+        this.raySpread = Math.PI / 1.5;
 
         this.rays = [];
         this.readings = [];

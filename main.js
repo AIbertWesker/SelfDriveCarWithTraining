@@ -9,7 +9,7 @@ let bestOne;
 
 function test() {
     
-    const N = 300;
+    const N = 1;
     const ships = generateShips(N);
     bestOne = ships[0];
     if (localStorage.getItem("bestBrain")) {                    //pobranie najlepszego z pamięci
@@ -18,7 +18,7 @@ function test() {
                 localStorage.getItem("bestBrain")
             );
             if(i!=0) {                                          //mutacja innego o 0.2, by był trochę inny
-                NeuralNetwork.mutate(ships[i].brain, 0.2);
+                
             }
         }
     

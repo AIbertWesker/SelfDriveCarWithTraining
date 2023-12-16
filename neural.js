@@ -70,7 +70,8 @@ class Neural {
         const dataset = [
             [0, 0, 0, 0, 0, 0],
             [0.5, 0, 0, 0, 0.5, 0],
-            [0.7, 0, 0, 0, 0, 1],
+            [0.5, 0, 0, 0, 0, 1],
+            [0.5, 0, 0, 0, 0, 1],
             [0, 0, 0.7, 0, 0, -1],
             [0, 0.4, 0.5, 0, 0, 1],
             [0, 0, 0, 0.5, 0, -1],
@@ -82,10 +83,11 @@ class Neural {
             [0, 0.5, 0, 0.2, 0.5, 0],
             [0.5, 0.2, 0, 0.2, 0, 0],
             [0, 0.1, 0.4, 0.1, 0.4, -1],
-            [0.4, 0.1, 0.4, 0.1, 0, 1]
+            [0.4, 0.1, 0.4, 0.1, 0, 1],
+
         ];
 
-        const epoch = 1000000; //powtorzenia
+        const epoch = 10000; //powtorzenia
         for (let i = 0; i < epoch; i++) {
             const losowanko = Math.floor(Math.random() * dataset.length);
             const input = dataset[losowanko].slice(0, 5); //losowanie inputu z datasetu
@@ -158,25 +160,25 @@ output = neuralObject.feedForward(input);
 console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
 console.log("Output: "+output);
 
-const dataset = [
-    [0, 0, 0, 0, 0, 1],
-    [1, 1, 0, 1, 0, 0],
-    [1, 1, 1, 0, 0, 1]
-];
+// const dataset = [
+//     [0, 0, 0, 0, 0, 1],
+//     [1, 1, 0, 1, 0, 0],
+//     [1, 1, 1, 0, 0, 1]
+// ];
 
-console.log("Error warstwy wyjsciowej: "+neuralObject.calculateOutputError(output, dataset[0]));
-chuj = neuralObject.calculateOutputError(output, dataset[0]);
-fiut = neuralObject.calculateHiddenError(chuj);
-console.log("Error warstwy ukrytej: "+fiut);
-neuralObject.updateWeightsAndBiases(0.1, chuj, fiut, output, input);
+// console.log("Error warstwy wyjsciowej: "+neuralObject.calculateOutputError(output, dataset[0]));
+// chuj = neuralObject.calculateOutputError(output, dataset[0]);
+// fiut = neuralObject.calculateHiddenError(chuj);
+// console.log("Error warstwy ukrytej: "+fiut);
+// neuralObject.updateWeightsAndBiases(0.1, chuj, fiut, output, input);
 
-console.log("Nowe wagi schowane: "+neuralObject.weightsInputHidden);
-console.log("Nowe wagi wyjsciowe: "+neuralObject.weightsHiddenOutput);
-console.log("Nowe bias schowane: "+neuralObject.biasHidden);
-console.log("Nowe bias wyjsciowe: "+neuralObject.biasOutput);
-output = neuralObject.feedForward(input);
-console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
-console.log("Output: "+output);
+// console.log("Nowe wagi schowane: "+neuralObject.weightsInputHidden);
+// console.log("Nowe wagi wyjsciowe: "+neuralObject.weightsHiddenOutput);
+// console.log("Nowe bias schowane: "+neuralObject.biasHidden);
+// console.log("Nowe bias wyjsciowe: "+neuralObject.biasOutput);
+// output = neuralObject.feedForward(input);
+// console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
+// console.log("Output: "+output);
 
 neuralObject.train();
 console.log("Nowe wagi schowane: "+neuralObject.weightsInputHidden);

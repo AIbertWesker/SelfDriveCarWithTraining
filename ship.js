@@ -16,9 +16,7 @@ class Ship{
 
         if(controlType !="DUMMY") {
             this.sensor = new Sensor(this);
-            this.brain = new NeuralNetwork(
-                [this.sensor.rayCount, 2, 1]
-            );
+            this.brain = neuralObject;
         }
         this.controls=new Controls(controlType);
     }
@@ -34,17 +32,17 @@ class Ship{
             const offsets = this.sensor.readings.map(
                 s => s == null ? 0 : 1 - s.offset
             );
-            const outputs = NeuralNetwork.feedForward(offsets, this.brain); //ruch o wyniki z propagacji w przód
+            const outputs = neuralObject.feedForward(offsets, this.brain); //ruch o wyniki z propagacji w przód
             //console.log(outputs);
 
             this.controls.forward = true;
             this.controls.back = false;
 
-            if(outputs[0]>0.1) {
+            if(outputs[0]>0.3) {
                 this.controls.left = false;
                 this.controls.right = true;
             }
-            else if(outputs[0]<-0.1) {
+            else if(outputs[0]<-0.3) {
                 this.controls.left = true;
                 this.controls.right = false;
             }
