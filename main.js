@@ -26,6 +26,7 @@ function test() {
 
     const traffic = [                                           //generowanie trafficów
         new Ship(road.getLaneCenter(2),-100,30,50, "DUMMY", 2),
+        new Ship(road.getLaneCenter(2),-100,30,50, "DUMMY", 2),
         new Ship(road.getLaneCenter(1),-400,30,50, "DUMMY", 2),
         new Ship(road.getLaneCenter(0),-400,30,50, "DUMMY", 2),
         new Ship(road.getLaneCenter(4),-700,30,50, "DUMMY", 2),

@@ -70,8 +70,10 @@ class Neural {
         const dataset = [
             [0, 0, 0, 0, 0, 0],
             [0.5, 0, 0, 0, 0.5, 0],
-            [0.5, 0, 0, 0, 0, 1],
-            [0.5, 0, 0, 0, 0, 1],
+            [0.7, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0.7, -1],
+            [0.5, 0, 0, 0, 0.5, 0],
+            [0.5, 0, 0, 0, 0.5, 0],
             [0, 0, 0.7, 0, 0, -1],
             [0, 0.4, 0.5, 0, 0, 1],
             [0, 0, 0, 0.5, 0, -1],
@@ -84,10 +86,12 @@ class Neural {
             [0.5, 0.2, 0, 0.2, 0, 0],
             [0, 0.1, 0.4, 0.1, 0.4, -1],
             [0.4, 0.1, 0.4, 0.1, 0, 1],
+            [0.3, 0.4, 0.5, 0.3, 0, 1],
+            [0, 0.3, 0.5, 0.4, 0.3, -1],
 
         ];
 
-        const epoch = 10000; //powtorzenia
+        const epoch = 100000; //powtorzenia
         for (let i = 0; i < epoch; i++) {
             const losowanko = Math.floor(Math.random() * dataset.length);
             const input = dataset[losowanko].slice(0, 5); //losowanie inputu z datasetu

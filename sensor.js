@@ -3,7 +3,7 @@ class Sensor {
         this.ship = ship;
         this.rayCount = 5;
         this.rayLenght = 150;
-        this.raySpread = Math.PI / 1.5;
+        this.raySpread = Math.PI / 1.2;
 
         this.rays = [];
         this.readings = [];
