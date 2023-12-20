@@ -36,7 +36,7 @@ class Ship{
                 s => s == null ? 0 : 1 - s.offset
             );
             const outputs = NeuralNetwork.feedForward(offsets, this.brain); //ruch o wyniki z propagacji w przód
-            //console.log(outputs);
+            console.log(outputs);
 
             this.controls.forward = outputs[0];
             this.controls.left = outputs[1];
