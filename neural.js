@@ -184,7 +184,11 @@ console.log("Output: "+output);
 // console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
 // console.log("Output: "+output);
 
-neuralObject.train();
+
+function train() {
+    neuralObject.train();
+}
+
 console.log("Nowe wagi schowane: "+neuralObject.weightsInputHidden);
 console.log("Nowe wagi wyjsciowe: "+neuralObject.weightsHiddenOutput);
 console.log("Nowe bias schowane: "+neuralObject.biasHidden);
