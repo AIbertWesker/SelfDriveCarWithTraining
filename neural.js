@@ -88,7 +88,6 @@ class Neural {
             [0.4, 0.1, 0.4, 0.1, 0, 1],
             [0.3, 0.4, 0.5, 0.3, 0, 1],
             [0, 0.3, 0.5, 0.4, 0.3, -1],
-
         ];
 
         const epoch = 100000; //powtorzenia
@@ -144,8 +143,43 @@ class Neural {
         for (let i = 0; i < this.hiddenSize; i++) {
             this.biasHidden[i] += learningRate * hiddenError[i] * this.bipolarSigmoidDerivative(this.hiddenLayer[i]);
         }
-
     }
+
+    calculateTrainingError() {
+        const dataset = [
+            [0, 0, 0, 0, 0, 0],
+            [0.5, 0, 0, 0, 0.5, 0],
+            [0.7, 0, 0, 0, 0, 1],
+            [0, 0, 0, 0, 0.7, -1],
+            [0.5, 0, 0, 0, 0.5, 0],
+            [0.5, 0, 0, 0, 0.5, 0],
+            [0, 0, 0.7, 0, 0, -1],
+            [0, 0.4, 0.5, 0, 0, 1],
+            [0, 0, 0, 0.5, 0, -1],
+            [0, 0, 0, 0.5, 0.4, -1],
+            [0.5, 0, 0.7, 0, 0, 1],
+            [0, 0, 0.7, 0, 0.5, -1],
+            [0, 0.4, 0, 0.4, 0, 0],
+            [0, 0.4, 0, 0.4, 0.4, 0],
+            [0, 0.5, 0, 0.2, 0.5, 0],
+            [0.5, 0.2, 0, 0.2, 0, 0],
+            [0, 0.1, 0.4, 0.1, 0.4, -1],
+            [0.4, 0.1, 0.4, 0.1, 0, 1],
+            [0.3, 0.4, 0.5, 0.3, 0, 1],
+            [0, 0.3, 0.5, 0.4, 0.3, -1],
+        ];
+        
+        let errSum = 0;
+        let target, input, output;
+        for (let i = 0; i < dataset.length; i++) {
+            target = dataset[i].slice(5, );
+            input = dataset[i].slice(0, 5);
+            output= this.feedForward(input);
+            errSum += Math.pow(target - output, 2);
+        }
+        return errSum / dataset.length+1;
+    }
+
 }
 
 const neuralObject = new Neural(5, 2, 1); // Create random neural network for getter
@@ -154,15 +188,15 @@ function getNeuralObject() {
     return neuralObject;
 }
 
-const input = [0.2, 0.4, 0.7, 0, 0];
+// const input = [0.2, 0.4, 0.7, 0, 0];
 
-console.log("Wylosowanie wagi schowane: "+neuralObject.weightsInputHidden);
-console.log("Wylosowanie wagi wyjsciowe: "+neuralObject.weightsHiddenOutput);
-console.log("Wylosowanie bias schowane: "+neuralObject.biasHidden);
-console.log("Wylosowanie bias wyjsciowe: "+neuralObject.biasOutput);
-output = neuralObject.feedForward(input);
-console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
-console.log("Output: "+output);
+// console.log("Wylosowanie wagi schowane: "+neuralObject.weightsInputHidden);
+// console.log("Wylosowanie wagi wyjsciowe: "+neuralObject.weightsHiddenOutput);
+// console.log("Wylosowanie bias schowane: "+neuralObject.biasHidden);
+// console.log("Wylosowanie bias wyjsciowe: "+neuralObject.biasOutput);
+// output = neuralObject.feedForward(input);
+// console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
+// console.log("Output: "+output);
 
 // const dataset = [
 //     [0, 0, 0, 0, 0, 1],
