@@ -177,9 +177,10 @@ class Neural {
             output= this.feedForward(input);
             errSum += Math.pow(target - output, 2);
         }
-        return errSum / dataset.length+1;
+        let errorLabel = errSum / dataset.length+1;
+        document.querySelector("#errTrain").textContent = `Błąd treningu: ${errorLabel}`;
     }
-
+ 
 }
 
 const neuralObject = new Neural(5, 2, 1); // Create random neural network for getter
@@ -221,6 +222,7 @@ function getNeuralObject() {
 
 function train() {
     neuralObject.train();
+    neuralObject.calculateTrainingError();
 }
 
 console.log("Nowe wagi schowane: "+neuralObject.weightsInputHidden);
@@ -228,5 +230,5 @@ console.log("Nowe wagi wyjsciowe: "+neuralObject.weightsHiddenOutput);
 console.log("Nowe bias schowane: "+neuralObject.biasHidden);
 console.log("Nowe bias wyjsciowe: "+neuralObject.biasOutput);
 console.log("Warstwa ukryta: "+neuralObject.hiddenLayer);
-output = neuralObject.feedForward(input);
-console.log("Output: "+output);
+// output = neuralObject.feedForward(input);
+// console.log("Output: "+output);

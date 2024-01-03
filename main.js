@@ -82,6 +82,8 @@ function test() {
         ctx.restore();
         requestAnimationFrame(animate);
     }
+
+   
 }
 
 function save() {                                           //zapis najlepszego
