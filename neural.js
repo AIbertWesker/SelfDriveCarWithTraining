@@ -177,7 +177,7 @@ class Neural {
             output= this.feedForward(input);
             errSum += Math.pow(target - output, 2);
         }
-        let errorLabel = errSum / dataset.length+1;
+        let errorLabel = errSum;
         document.querySelector("#errTrain").textContent = `Błąd treningu: ${errorLabel}`;
     }
  
