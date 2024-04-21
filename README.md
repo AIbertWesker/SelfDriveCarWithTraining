@@ -1,2 +1,2 @@
-# LodziezGaming
-AI gaming top 1
+# backpropagation algorithm
+js html css with AI
